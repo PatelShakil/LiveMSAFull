@@ -1,0 +1,5 @@
+#!/bin/sh
+mvn clean package
+docker build -t PatelShakil/LiveMSAClient .
+docker rm -f LiveMSAClient 2>/dev/null || true
+docker run -it --name LiveMSAClient -p 8080:8080 --name LiveMSAClient PatelShakil/LiveMSAClient

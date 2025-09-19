@@ -1,0 +1,12 @@
+com\shakilpatel\livemsaresource\config\CrossOriginResourceSharingFilter.class
+com\shakilpatel\livemsaresource\service\ExampleService.class
+com\shakilpatel\livemsaresource\service\HealthCheckService.class
+ejb\ReportBeanLocal.class
+service\LandService.class
+com\shakilpatel\livemsaresource\config\BootStrap.class
+ejb\ReportBean.class
+com\shakilpatel\livemsaresource\entity\Land.class
+com\shakilpatel\livemsaresource\entity\Village.class
+com\shakilpatel\livemsaresource\config\Producers.class
+com\shakilpatel\livemsaresource\service\package-info.class
+com\shakilpatel\livemsaresource\entity\District.class

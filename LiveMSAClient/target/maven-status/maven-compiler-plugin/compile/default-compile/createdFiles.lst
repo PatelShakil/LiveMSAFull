@@ -1,0 +1,16 @@
+entity\Land.class
+cdi\LandReportBean$1.class
+cdi\LandReportBean$2.class
+com\shakilpatel\livemsaclient\service\ExampleService.class
+servlet\ReportServlet.class
+com\shakilpatel\livemsaclient\config\Producers.class
+entity\District.class
+entity\Village.class
+servlet\ReportServlet$1.class
+cdi\LandReportBean.class
+servlet\ReportServlet$2.class
+com\shakilpatel\livemsaclient\config\BootStrap.class
+com\shakilpatel\livemsaclient\service\package-info.class
+client\ReportClient.class
+com\shakilpatel\livemsaclient\config\CrossOriginResourceSharingFilter.class
+com\shakilpatel\livemsaclient\service\HealthCheckService.class

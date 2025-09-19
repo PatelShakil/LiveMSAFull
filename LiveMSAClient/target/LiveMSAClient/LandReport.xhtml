@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Report</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form>
+                <h:selectOneMenu id="d" value="${landReportBean.districtId}">
+                    <f:selectItems value="${landReportBean.districts}" var="dis" itemLabel="${dis.name}" itemValue="#{dis.id}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Fetch"  action="${landReportBean.loadLands}" />
+            </h:form>
+        </f:view>
+        <f:view>
+
+
+            <h:form>
+                <h1><h:outputText value="List"/></h1>
+                <h:dataTable value="#{landReportBean.lands}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PlotNo"/>
+                        </f:facet>
+                        <h:outputText value="#{item.plotNo}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Area"/>
+                        </f:facet>
+                        <h:outputText value="#{item.area}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Person"/>
+                        </f:facet>
+                        <h:outputText value="#{item.person}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quality"/>
+                        </f:facet>
+                        <h:outputText value="#{item.quality}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="VillageId"/>
+                        </f:facet>
+                        <h:outputText value="#{item.villageId}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="DistrictId"/>
+                        </f:facet>
+                        <h:outputText value="#{item.districtId}"/>
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </f:view>
+
+
+    </h:body>
+</html>
