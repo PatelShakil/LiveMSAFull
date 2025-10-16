@@ -1,0 +1,105 @@
+MSA App dockerize with MySQL Database
+
+1 -> Create Network combination
+
+docker network create msa-net
+
+2 -> Create MySQL container with below configuration
+
+docker run -d --name msamysql --network msa-net -e MYSQL_ROOT_PASSWORD=shakil -e MYSQL_DATABASE=msadb -v msa_data:/var/lib/mysql -p 3406:3306 mysql:8.0
+
+3 -> Resource configuration 
+3.1 -> domain.xml
+	<jdbc-connection-pool name="mysqlpool"
+    datasource-classname="com.mysql.cj.jdbc.MysqlDataSource"
+    res-type="javax.sql.DataSource">
+    <property name="serverName" value="msamysql"/>
+    <property name="portNumber" value="3306"/>
+    <property name="databaseName" value="msadb"/>
+    <property name="user" value="root"/>
+    <property name="password" value="shakil"/>
+    <property name="useSSL" value="false"/>
+    <property name="allowPublicKeyRetrieval" value="true"/>
+    <property name="requireSSL" value="false"/>
+    <property name="sslMode" value="DISABLED"/>
+</jdbc-connection-pool>
+<jdbc-resource pool-name="mysqlpool" jndi-name="jdbc/mysql"/>
+
+3.2 -> Update the database with tables and prefilled data
+
+go to MySQL terminal using 
+mysql -h localhost -P 3406 -uroot -p
+
+update root user
+alter user root@'%' identified by 'shakil';
+
+export data from your phpMyAdmin and copy the text
+
+paste the text in this MySQL terminal
+
+3.3 -> Dockerfile
+	#fetch payara micro in docker container
+FROM payara/micro:6.2024.5-jdk17
+
+#deployment directory
+ENV DEPLOY_DIR=/opt/payara/deployments
+
+# create a custom config folder
+RUN mkdir ${PAYARA_HOME}/config
+COPY --chown=payara:payara domain.xml ${PAYARA_HOME}/config/
+COPY --chown=payara:payara mysql-connector-java-8.0.20.jar ${PAYARA_HOME}/config/
+#RUN chown -R payara:payara ${PAYARA_HOME}/config
+USER payara
+WORKDIR ${PAYARA_HOME}
+
+COPY artifact/LiveMSAResource.war ${DEPLOY_DIR}/
+
+EXPOSE 8080
+
+CMD ["--addLibs","/opt/payara/config/mysql-connector-java-8.0.20.jar","--deploymentDir","/opt/payara/deployments","--rootDir", "/opt/payara/config","--domainConfig", "/opt/payara/config/domain.xml"]
+
+
+
+3.4 -> Create docker image resource
+
+docker build -t msaresource .
+
+3.5 -> Run docker container
+
+docker run -d --name msaresource --network msa-net -p 8085:8080 msaresource
+
+3.6 -> Debugging Logs
+docker logs -f msaresource
+
+4 -> Create Docker Image of client service
+
+4.1 -> Change the client baseUrl
+
+@RegisterRestClient(baseUri = "http://msaresource:8080/LiveMSAResource/rest/land")
+
+4.2 -> Dockerfile
+
+# Fetch Payara Micro base image
+FROM payara/micro:6.2024.5-jdk17
+
+# Deployment directory
+ENV DEPLOY_DIR=/opt/payara/deployments
+
+USER payara
+WORKDIR ${PAYARA_HOME}
+
+# Copy your WAR file
+COPY artifact/LiveMSAClient.war ${DEPLOY_DIR}/
+
+# Expose Payara Micro's default HTTP port
+EXPOSE 8080
+
+# Run Payara Micro with the deployment
+ENTRYPOINT ["java", "-jar", "/opt/payara/payara-micro.jar", "--deploy", "/opt/payara/deployments/LiveMSAClient.war"]
+
+4.3 -> Create docker image of client service
+
+docker run -d --name msaclient --network msa-net -p 8086:8080 msaclient
+
+5 -> Go to http://localhost:8086/LiveMSAClient/faces/LandReport.xhtml
+

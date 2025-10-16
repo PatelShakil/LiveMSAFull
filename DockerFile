@@ -1,0 +1,26 @@
+FROM payara/micro:latest
+
+USER root
+
+# Create config folder
+RUN mkdir -p ${PAYARA_HOME}/config
+
+# Copy MySQL Driver (needed for JDBC connection pools)
+COPY mysql-connector-java-8.0.20.jar ${PAYARA_HOME}/config/
+
+# (Optional) Copy MicroProfile config instead of domain.xml
+# Example: microprofile-config.properties for DB settings
+# COPY microprofile-config.properties ${PAYARA_HOME}/config/
+
+# Set proper ownership
+RUN chown -R payara:payara ${PAYARA_HOME}/config
+
+USER payara
+WORKDIR ${PAYARA_HOME}
+
+# Deploy WAR artefact
+COPY LiveMSAResource/artifact/LiveMSAResource.war $DEPLOY_DIR
+
+# Start Payara Micro with extra JDBC driver
+CMD ["--addLibs", "/opt/payara/config/mysql-connector-java-8.0.20.jar", \
+     "--deploymentDir", "/opt/payara/deployments"]

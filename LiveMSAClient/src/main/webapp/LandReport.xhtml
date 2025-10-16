@@ -55,13 +55,13 @@
                         <f:facet name="header">
                             <h:outputText value="VillageId"/>
                         </f:facet>
-                        <h:outputText value="#{item.villageId}"/>
+                        <h:outputText value="#{item.villageId.name}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="DistrictId"/>
                         </f:facet>
-                        <h:outputText value="#{item.districtId}"/>
+                        <h:outputText value="#{item.districtId.name}"/>
                     </h:column>
                 </h:dataTable>
             </h:form>

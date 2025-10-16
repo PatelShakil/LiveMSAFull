@@ -19,7 +19,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
  *
  * @author Acer
  */
-@RegisterRestClient(baseUri = "http://localhost:8085/LiveMSAResource/rest/land")
+@RegisterRestClient(baseUri = "http://msaresource:8080/LiveMSAResource/rest/land")
 public interface ReportClient {
     
     @ClientHeaderParam(name = "Authorization",value = "{getToken}")

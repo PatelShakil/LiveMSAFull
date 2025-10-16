@@ -8,7 +8,6 @@ import client.ReportClient;
 import entity.District;
 import entity.Land;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.GenericType;
