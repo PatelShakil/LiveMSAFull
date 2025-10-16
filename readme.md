@@ -3,6 +3,13 @@
 This guide provides step-by-step instructions to set up and run the **MSA Application** using **Docker**, **Payara Micro**, and **MySQL 8.0** in a containerized environment.
 
 ---
+## 📺 Introduction Video
+
+[![MSA App Docker Setup](https://img.youtube.com/vi/EcCm7hZaA0c/maxresdefault.jpg)](https://youtu.be/EcCm7hZaA0c)
+
+Watch the step-by-step video guide for setting up the MSA App with Docker.
+
+---
 
 ## 🚀 1. Create Docker Network
 
